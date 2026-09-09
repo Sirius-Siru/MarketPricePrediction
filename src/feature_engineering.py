@@ -143,8 +143,7 @@ def generate_robust_primary_signals(df):
 
     # 1. Tính toán các chỉ báo bằng Series độc lập
     macd = df['MACD']
-    macd_signal = macd.ewm(span=9, adjust=False).mean()
-    macd_hist = macd - macd_signal
+    macd_hist = df['Hist']
 
     # RSI 14
     rsi_14 = df['RSI_14']
