@@ -73,10 +73,9 @@ signals_df = generate_robust_primary_signals(df)
 barrier_df = apply_triple_barrier_explicit(df, signals_df)
 
 ######### Add target
-df = pd.concat([df, signals_df, barrier_df, features_df,], axis=1)
+target_df = pd.concat([signals_df, barrier_df], axis=1)
 
 ######### Feature
-target_df = pd.concat([signals_df, barrier_df], axis=1)
 features_df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
                 atr_df, rstd_df, bb_df, vol_df,
                 return_df, MAE_df, MFE_df,
@@ -84,6 +83,8 @@ features_df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
                 ], axis=1
 )
 
-del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df, features_df
+######### Full DataFrame
+df = pd.concat([features_df, target_df], axis=1)
 
+del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df
 gc.collect()
