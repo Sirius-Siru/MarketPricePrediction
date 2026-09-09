@@ -240,3 +240,30 @@ def apply_triple_barrier_explicit(df, signals_df, ptp=2.0, psl=1.0, horizon=14):
     )
 
     return barrier_df
+
+def extract_ema_trend_features(df):
+    """
+    Trích xuất đặc trưng khoảng cách và độ dốc EMA làm Feature cho Meta-Model (Bước 2).
+    """
+    close = df['close']
+    atr = df['ATR_14']
+    
+    ema_fast = df['EMA_12']
+    ema_slow = df['EMA_250']
+    
+    # 1. Khoảng cách tương đối giữa EMA ngắn và EMA dài (%)
+    ema_distance = (ema_fast - ema_slow) / atr
+    
+    # 2. Độ dốc xu hướng của EMA 250 (Góc nghiêng xu hướng)
+    ema_250_slope = (ema_slow - ema_slow.shift(5)) / atr
+    
+    # 3. Trạng thái vị thế giá so với EMA 250
+    price_to_ema250 = (close - ema_slow) / atr
+
+    features_df = pd.DataFrame({
+        'EMA_Distance_12_250': ema_distance,
+        'EMA_250_Slope': ema_250_slope,
+        'Price_to_EMA250': price_to_ema250
+    }, index=df.index)
+
+    return features_df
