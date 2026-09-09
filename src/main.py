@@ -1,4 +1,5 @@
 import pandas as pd
+import gc
 from feature_engineering import *
 
 DATA_PATH = '../data/BTCUSDT_1h.parquet'
@@ -64,9 +65,25 @@ df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
                 ], axis=1
 )
 
+######### EMA Trend Extract
+features_df = extract_ema_trend_features(df)
+
 # Primary Signal Generation
 signals_df = generate_robust_primary_signals(df)
 barrier_df = apply_triple_barrier_explicit(df, signals_df)
 
-######### Concat
-df = pd.concat([df, signals_df, barrier_df], axis=1)
+######### Add target
+df = pd.concat([df, signals_df, barrier_df, features_df,], axis=1)
+
+######### Feature
+target_df = pd.concat([signals_df, barrier_df], axis=1)
+features_df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
+                atr_df, rstd_df, bb_df, vol_df,
+                return_df, MAE_df, MFE_df,
+                ADX_df, features_df,
+                ], axis=1
+)
+
+del df, ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df, features_df
+
+gc.collect()
