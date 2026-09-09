@@ -1,0 +1,15 @@
+# Python / Build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+src/*.egg-info/
+dist/
+build/
+
+# Virtual environments
+env/
+ENV/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+**/3ipynb_checkpoints/
