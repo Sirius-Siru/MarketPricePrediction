@@ -13,3 +13,6 @@ ENV/
 # Jupyter Notebooks
 .ipynb_checkpoints/
 **/3ipynb_checkpoints/
+
+# gitignore
+.gitignore

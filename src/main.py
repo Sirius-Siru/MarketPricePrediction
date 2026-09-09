@@ -84,6 +84,6 @@ features_df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
                 ], axis=1
 )
 
-del df, ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df, features_df
+del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df, features_df
 
 gc.collect()
