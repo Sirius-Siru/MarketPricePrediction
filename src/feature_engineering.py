@@ -206,3 +206,38 @@ def extract_ema_trend_features(df):
         'EMA_250_Slope': (ema_slow - ema_slow.shift(5)) / atr,
         'Price_to_EMA250': (close - ema_slow) / atr
     }, index=df.index)
+
+def extract_raw_baseline(df_target_series, ptp=2.5, psl=1.0):
+    """
+    Trích xuất Baseline 1 từ series Meta_Target_Binary (chứa 1.0, 0.0 và NaN)
+    """
+    # Loại bỏ hoàn toàn NaN (những nến không có tín hiệu)
+    clean_target = df_target_series.dropna()
+    
+    total_trades = len(clean_target)
+    win_trades = (clean_target == 1.0).sum()
+    loss_trades = (clean_target == 0.0).sum()
+    
+    win_rate = win_trades / total_trades if total_trades > 0 else 0
+    ev_per_trade = (win_rate * ptp) - ((1.0 - win_rate) * psl)
+    
+    baseline_df = pd.DataFrame({
+        'Chỉ số (Baseline Chưa ML)': [
+            'Tổng tín hiệu thô (Primary Signals)',
+            'Số lệnh thắng (TP)',
+            'Số lệnh thua/timeout (SL)',
+            'Win Rate gốc',
+            'Kỳ vọng lợi nhuận (EV gốc)',
+            'Trade Retain Rate'
+        ],
+        'Giá trị': [
+            f"{total_trades:,} lệnh",
+            f"{win_trades:,} lệnh",
+            f"{loss_trades:,} lệnh",
+            f"{win_rate:.2%}",
+            f"{ev_per_trade:+.4f} R / lệnh",
+            "100.0%"
+        ]
+    })
+    
+    return baseline_df

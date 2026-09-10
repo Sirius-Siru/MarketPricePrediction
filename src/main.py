@@ -48,6 +48,9 @@ target_df = pd.concat([signals_df, barrier_df], axis=1)
 # 4. Assemble Final Dataset
 df = pd.concat([features_df, ema_trend_df, target_df], axis=1)
 
+# 5. Extract Raw Baseline
+baseline_summary = extract_raw_baseline(df['Meta_Target_Binary'])
+
 # Memory Cleanup
 del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, ema_trend_df, signals_df, barrier_df, target_df, features_df
 gc.collect()
