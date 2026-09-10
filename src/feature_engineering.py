@@ -167,7 +167,6 @@ def generate_robust_primary_signals(df):
 
     # 4. Xuất ra DataFrame riêng biệt
     signals_df = pd.DataFrame({
-        'MACD_Hist': macd_hist,
         'Primary_Signal': primary_signal
     }, index=df.index)
 
