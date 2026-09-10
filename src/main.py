@@ -57,14 +57,6 @@ return_df = RETURN(df, periods)
 MAE_df = MAE(df, periods)
 MFE_df = MFE(df, periods)
 
-######### Merge Indices
-df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
-                atr_df, rstd_df, bb_df, vol_df,
-                return_df, MAE_df, MFE_df,
-                ADX_df,
-                ], axis=1
-)
-
 ######### EMA Trend Extract
 features_df = extract_ema_trend_features(df)
 
@@ -76,7 +68,7 @@ barrier_df = apply_triple_barrier_explicit(df, signals_df)
 target_df = pd.concat([signals_df, barrier_df], axis=1)
 
 ######### Feature
-features_df = pd.concat([ema_df, rsi_df, macd_df, roc_df,
+features_df = pd.concat([df, ema_df, rsi_df, macd_df, roc_df,
                 atr_df, rstd_df, bb_df, vol_df,
                 return_df, MAE_df, MFE_df,
                 ADX_df, features_df,
