@@ -82,5 +82,5 @@ features_df = pd.concat([features_df, ema_trend_df], axis=1)
 df = pd.DataFrame()
 df = pd.concat([features_df, target_df], axis=1)
 
-del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df
-gc.collect()
+#del ema_df, rsi_df, macd_df, roc_df, atr_df, rstd_df, bb_df, vol_df, return_df, MAE_df, MFE_df, ADX_df, periods, signals_df, barrier_df
+#gc.collect()
